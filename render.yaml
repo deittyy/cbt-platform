@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: cbt-platform-api
+    runtime: node
+    plan: starter
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        fromDatabase:
+          name: cbt-platform-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        value: https://cbt-platform.vercel.app
+
+databases:
+  - name: cbt-platform-db
+    databaseName: cbt_platform
+    user: cbt_admin
+    region: oregon

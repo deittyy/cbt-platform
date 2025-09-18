@@ -1,0 +1,76 @@
+/* CBT Platform Global Styles */
+.App {
+  min-height: 100vh;
+}
+
+/* Portal Cards Hover Effects */
+.portal-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none !important;
+}
+
+.portal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+/* Authentication Pages */
+.admin-login,
+.student-login,
+.student-register {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* Dashboard Navigation */
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+/* Responsive Card Adjustments */
+@media (max-width: 768px) {
+  .portal-card {
+    margin-bottom: 1rem;
+  }
+  
+  .home-page .display-4 {
+    font-size: 2rem;
+  }
+}
+
+/* Loading States */
+.spinner-border {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Custom Button Styles */
+.btn-lg {
+  padding: 12px 24px;
+  font-size: 1.1rem;
+}
+
+/* Form Enhancements */
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Dashboard Stats Cards */
+.bg-primary,
+.bg-success,
+.bg-info,
+.bg-warning {
+  border-radius: 10px;
+}
+
+/* Error and Success Alerts */
+.alert {
+  border-radius: 8px;
+  border: none;
+}
+
+/* Footer Styling */
+footer {
+  margin-top: auto;
+}
