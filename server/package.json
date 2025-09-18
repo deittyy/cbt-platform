@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "echo 'Server build complete'"
+    "build": "echo 'Server build complete'",
+    "seed": "node seed.js"
   },
   "keywords": ["cbt", "testing", "education", "react", "node"],
   "author": "CBT Platform Developer",
