@@ -93,4 +93,129 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
   }
 });
 
+// Get single question (Admin only)
+router.get('/:id', authenticate, adminOnly, async (req, res) => {
+  try {
+    const question = await Question.findById(req.params.id)
+      .populate('course', 'name code')
+      .populate('createdBy', 'firstName lastName');
+
+    if (!question) {
+      return res.status(404).json({
+        success: false,
+        message: 'Question not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: question
+    });
+  } catch (error) {
+    console.error('Get question error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching question'
+    });
+  }
+});
+
+// Update question (Admin only)
+router.put('/:id', authenticate, adminOnly, async (req, res) => {
+  try {
+    const questionId = req.params.id;
+    const updates = req.body;
+
+    // Verify course exists if course is being updated
+    if (updates.course) {
+      const courseExists = await Course.findById(updates.course);
+      if (!courseExists) {
+        return res.status(404).json({
+          success: false,
+          message: 'Course not found'
+        });
+      }
+    }
+
+    const question = await Question.findByIdAndUpdate(
+      questionId,
+      updates,
+      { new: true, runValidators: true }
+    ).populate('course', 'name code');
+
+    if (!question) {
+      return res.status(404).json({
+        success: false,
+        message: 'Question not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Question updated successfully',
+      data: question
+    });
+  } catch (error) {
+    console.error('Update question error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating question'
+    });
+  }
+});
+
+// Delete question (Admin only)
+router.delete('/:id', authenticate, adminOnly, async (req, res) => {
+  try {
+    const question = await Question.findByIdAndDelete(req.params.id);
+
+    if (!question) {
+      return res.status(404).json({
+        success: false,
+        message: 'Question not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Question deleted successfully'
+    });
+  } catch (error) {
+    console.error('Delete question error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error deleting question'
+    });
+  }
+});
+
+// Toggle question status (Admin only)
+router.patch('/:id/toggle-status', authenticate, adminOnly, async (req, res) => {
+  try {
+    const question = await Question.findById(req.params.id);
+
+    if (!question) {
+      return res.status(404).json({
+        success: false,
+        message: 'Question not found'
+      });
+    }
+
+    question.isActive = !question.isActive;
+    await question.save();
+
+    res.json({
+      success: true,
+      message: `Question ${question.isActive ? 'activated' : 'deactivated'} successfully`,
+      data: question
+    });
+  } catch (error) {
+    console.error('Toggle question status error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating question status'
+    });
+  }
+});
+
 module.exports = router;

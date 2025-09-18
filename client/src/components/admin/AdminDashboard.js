@@ -16,7 +16,7 @@ const AdminDashboard = () => {
       {/* Navigation */}
       <Navbar bg="success" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand>
+          <Navbar.Brand as={Link} to="/admin/dashboard">
             <FaUserShield className="me-2" />
             CBT Admin Portal
           </Navbar.Brand>
@@ -27,6 +27,7 @@ const AdminDashboard = () => {
               <Nav.Link as={Link} to="/admin/courses">Courses</Nav.Link>
               <Nav.Link as={Link} to="/admin/questions">Questions</Nav.Link>
               <Nav.Link as={Link} to="/admin/student-results">Results</Nav.Link>
+              <Nav.Link as={Link} to="/">Home</Nav.Link>
             </Nav>
             <Nav>
               <Navbar.Text className="me-3">
